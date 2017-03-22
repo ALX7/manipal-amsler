@@ -1,0 +1,14 @@
+{% extends 'base_gen.html' %}
+
+{% block title %}<title>Add Patient</title>{% endblock %}
+
+{% block content %}
+<h1>Add Patient</h1>
+<form role="form" action="" method="post">
+    {% csrf_token %}
+    <table>
+    	{{ form }}
+    </table>	
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}

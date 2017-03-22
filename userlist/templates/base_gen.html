@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  {% block title %}<title>Manipal E-Amsler</title>{% endblock %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+    .sidebar-nav {
+    position: relative;  
+    margin-top: 20px;
+    padding: 8px;
+    list-style: none;
+    background:rgba(51, 51, 51, 0.1);
+    font-size: 15px;
+
+    }
+    table {
+    border-collapse: collapse;
+    width: 100%;
+    }
+
+    th, td {
+    text-align: left;
+    padding: 8px;
+    }
+
+    tr:nth-child(even){background-color: #f2f2f2}
+
+    th {
+    background-color: #4CAF50;
+    color: white;
+    }
+    
+    a.one:link, a.one:visited{
+    background-color: #4CAF50;
+    color: white;
+    margin: 10px;
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    width:100px;
+    }
+    a.one:hover, a.one:active {
+    background-color: #fff;
+    color: #4CAF50;
+    }
+
+  </style>
+  <!-- Add additional CSS in static file -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body>
+
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Manipal E-Amsler</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a href="{% url 'index' %}">HOME</a></li>
+        <li><a href="{% url 'about' %}" >ABOUT</a></li>
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'patient' %}">PATIENT</a></li>
+          <li><a href="{% url 'addpatient' %}">ADD</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+          <li><a href="{% url 'logout'%}">LOGOUT</a></li>  
+          <li><a href=""> User: {{ user.get_full_name }}</a></li>
+          </ul>
+        {% else %}
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="{% url 'login'%}?next={{request.path}}">LOGIN</a></li> 
+        </ul>    
+        {% endif %} 
+    </div>
+  </nav>
+    {% block content %}{% endblock %}
+      
+    {% block pagination %}
+      {% if is_paginated %}
+        <div class="pagination">
+          <span class="page-links">
+            {% if page_obj.has_previous %}
+              <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+            <span class="page-current">
+              Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+            {% if page_obj.has_next %}
+              <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+            {% endif %}
+          </span>
+        </div>
+      {% endif %}
+    {% endblock %}
+  </div>
+</body>
+</html>
