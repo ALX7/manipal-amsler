@@ -5,13 +5,14 @@
 
 {% block content %}
 
-  <h1 class="text-center">Name: {{ patient.first_name }} {{patient.last_name}}</h1>
-  
+  <div class="jumbotron text-center bg-1">
+    <h1 class="text-center">{{ patient.first_name }} {{patient.last_name}}</h1>
+  </div>
   <div style="margin-left:20px">
     <p><strong>LastName:</strong>{{ patient.last_name }}</p> <!-- author detail link not yet defined -->
     <p><strong>FirstName:</strong> {{ patient.first_name }}</p>
-    <p><strong>Address:</strong> {{ patient.address }}</p> 
-    <p><strong>Age:</strong> {{ patient.age }}</p>  
+    <p><strong>Address:</strong> {{ patient.address }}</p>
+    <p><strong>Age:</strong> {{ patient.age }}</p>
   </div>
   <div style="margin-left:20px;margin-top:20px">
     <h4>Amsler Grid Results</h4>
