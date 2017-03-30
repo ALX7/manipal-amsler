@@ -55,7 +55,7 @@ ROOT_URLCONF = 'amsler.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['./templates',],
+        'DIRS': ['./manipal-amsler/templates',],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

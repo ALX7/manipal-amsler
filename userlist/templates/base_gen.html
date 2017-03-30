@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
+
   {% block title %}<title>Manipal E-Amsler</title>{% endblock %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,15 +9,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <style>
-    .sidebar-nav {
-    position: relative;  
-    margin-top: 20px;
-    padding: 8px;
-    list-style: none;
-    background:rgba(51, 51, 51, 0.1);
-    font-size: 15px;
 
-    }
     table {
     border-collapse: collapse;
     width: 100%;
@@ -34,7 +26,7 @@
     background-color: #4CAF50;
     color: white;
     }
-    
+
     a.one:link, a.one:visited{
     background-color: #4CAF50;
     color: white;
@@ -50,6 +42,34 @@
     color: #4CAF50;
     }
 
+    .navbar {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border: 0;
+    border-radius: 0;
+    margin-bottom: 0;
+    font-size: 15px;
+    letter-spacing: 5px;
+  }
+  .navbar-nav  li a:hover {
+      color: #1abc9c !important;
+  }
+  .bg-1 {
+      background-color: #1abc9c; /* Green */
+      color: #ffffff;
+  }
+  .bg-2 {
+      background-color: #474e5d; /* Dark Blue */
+      color: #ffffff;
+  }
+  .bg-3 {
+      background-color: #ffffff; /* White */
+      color: #555555;
+  }
+  .bg-4 {
+      background-color: #2f2f2f; /* Black Gray */
+      color: #fff;
+  }
   </style>
   <!-- Add additional CSS in static file -->
   {% load static %}
@@ -71,19 +91,20 @@
           <li><a href="{% url 'addpatient' %}">ADD</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-          <li><a href="{% url 'logout'%}">LOGOUT</a></li>  
+          <li><a href="{% url 'logout'%}">LOGOUT</a></li>
           <li><a href=""> User: {{ user.get_full_name }}</a></li>
           </ul>
         {% else %}
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="{% url 'login'%}?next={{request.path}}">LOGIN</a></li> 
-        </ul>    
-        {% endif %} 
+          <li><a href="{% url 'login'%}?next={{request.path}}">LOGIN</a></li>
+        </ul>
+        {% endif %}
     </div>
   </nav>
+
     {% block content %}{% endblock %}
-      
+
     {% block pagination %}
       {% if is_paginated %}
         <div class="pagination">
