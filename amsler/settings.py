@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'userlist.apps.UserlistConfig',
 ]
 
@@ -123,4 +124,6 @@ STATIC_URL = '/static/'
 # Redirect to home URL after login (Default redirects to /accounts/profile/) remove later
 LOGIN_REDIRECT_URL = '/'
 
-#MEDIA_ROOT = '/amsler/img/'
+ENV_PATH = os.path.abspath(os.path.dirname(__file__))
+MEDIA_ROOT = os.path.join(ENV_PATH, 'media/')
+MEDIA_URL = '/media/'
