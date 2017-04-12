@@ -16,8 +16,16 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from rest_framework.urlpatterns import format_suffix_patterns
+from userlist import views
+
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^ams_api/$', views.AmslerView.as_view(), name ='ams_api'),
+    url(r'^ams_det/(?P<pk>[0-9A-Za-z-]+)/$', views.AmslerDetail.as_view(), name = 'ams_det'),
+    url(r'^amsler$', views.api_root),
+
 ]
 
 from django.conf.urls import include

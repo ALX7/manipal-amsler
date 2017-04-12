@@ -2,6 +2,10 @@ from django.shortcuts import render
 from userlist.forms import AddPatientForm
 from django.http import HttpResponseRedirect
 from userlist.forms import StatusChangeForm
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+
 
 # Create your views here.
 from .models import Patient, Doctor, AmslerGrid, Hospital
@@ -81,4 +85,35 @@ def addpatient(request):
 
     return render(request, 'addpatient.html', {
         'form': form,
+    })
+
+# API Definitions
+from .serializers import AmslerGridSerializer
+
+class AmslerView(APIView):
+	def get(self, request):
+
+		am_grid = AmslerGrid.objects.all()
+		serializer = AmslerGridSerializer(am_grid,many=True)
+		return Response(serializer.data)
+
+	def post(self, request):
+		serializer = AmslerGridSerializer(data=request.data)
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data, status=status.HTTP_201_CREATED)
+		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+from rest_framework import generics
+class AmslerDetail(generics.RetrieveUpdateDestroyAPIView):
+	queryset = AmslerGrid.objects.all()
+	serializer_class = AmslerGridSerializer
+
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework.reverse import reverse
+@api_view(['GET'])
+def api_root(request, format=None):
+    return Response({
+        'amsler_list': reverse('ams_api', request=request, format=format),
     })
