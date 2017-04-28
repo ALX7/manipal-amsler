@@ -1,7 +1,9 @@
 {% extends "base_gen.html" %}
 
 {% block content %}
-<h2>You Have Logged out!</h2>  
+<div class="jumbotron text-center">
+  <h1>Logged Out</h1>
+</div>
 
-<a href="{% url 'login'%}">Click here to login again.</a>
+<a href="{% url 'login'%}?next={{request.path}}">Click here to login again.</a>
 {% endblock %}

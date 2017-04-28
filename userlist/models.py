@@ -17,6 +17,7 @@ class Patient(models.Model):
     contact_no = models.CharField(max_length=10, help_text="Select contact number")
     doctor = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     email = models.EmailField(blank=True,null=True,unique=True)
+    fundus_photo = models.ImageField(upload_to="fundus/", null=True, blank=True)
 
 
     def __str__(self):
@@ -41,6 +42,8 @@ class AmslerGrid(models.Model):
 
     amsler_score = models.IntegerField('Amsler_score')
     photo = models.ImageField(upload_to="img/", null=True, blank=True)
+    grid1 = models.ImageField(upload_to="grid/", null=True, blank=True)
+
 
     STATUS = (
         ('v', 'Verified'),

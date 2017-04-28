@@ -8,35 +8,30 @@
 <style type="text/css">
 
 .style1 {
-			position:absolute;
-			float:left;
-			top: 140px;
-			left:100px;
-			margin:10px;
-            padding: 10px;
-			border: 2px solid black;
-			cursor:move;
-        }
+		position:absolute;
+		float:left;
+		top: 140px;
+		left:100px;
+		margin:10px;
+        padding: 10px;
+		border: 2px solid black;
+		cursor:move;
+    }
 .style2 {
-			float:left;
-			position:relative;
-            padding: 1px;
-			border: 2px solid black;
-			cursor:move;
-        }
+		float:left;
+		position:relative;
+        padding: 2px;
+		cursor:move;
+    }
 .header1 {
-			height:90px;
-			padding:5px;
+		height:90px;
+		padding:5px;
 
-	    }
-.menubar {
-			position:absolute;
-			right: 8px;
-			width: 380px;
-			padding:5px;
-			background:#fff;
-            list-style: none;
-        }
+    }
+.container-fluid {
+    padding-right: 0px;
+
+    }
 
 .navbar {
         padding-top: 15px;
@@ -66,7 +61,9 @@
         background-color: #2f2f2f; /* Black Gray */
         color: #fff;
   }
+
 </style>
+
 <script type="text/javascript">
         function startDrag(e) {
             // determine event object
@@ -142,69 +139,60 @@
         {% endif %}
         </div>
     </nav>
-    <div class = "style2">
-        {% load static %}
-            <img id="im1" src="/media/{{ photo }}" alt="Not Available" height="500px">
-    </div>
 
-    <canvas id="canvas" width="420px" height="420px" style="background: #fff; opacity:0.6;" class = "style1">Your browser does not support canvas </canvas>
+    <div class="container-fluid">
 
-    <div class = "menubar">
-        <TABLE style="border-collapse: collapse; width: 100%;">
-            <tr>
-                <td>Patient Name: </td> <td>{{ first_name }} {{last_name}}</td>
-            </tr>
-            <tr>
-                <td>Amsler Score </td>  <td style="align-content: center;">{{amsler_score}}</td>
-            </tr>
-            <tr>
-                <td>Status </td><td>{{status}}</td>
-            </tr>
-        </TABLE>
-        <form role="form" action="" method="post">
+        <div class = "style2 col-sm-8">
+            {% load static %}
+            <img id="im1" src="/media/{{ photo }}" alt= "Not available"  onerror="this.onerror=null;this.src='/media/{{ fundus }}';" height="500px">
+        </div>
+
+        <img id="canva" src = "/media/{{ grid1 }}" alt = "Not available" width="420px" height="420px" style="background: #fff; opacity:0.5;" class = "style1"></img>
+
+        <div class = "menubar col-sm-4 bg-3">
+            <h3>Patient Details</h3>
+            <TABLE style="border-collapse: collapse; width: 100%;">
+                <tr>
+                    <td>Patient Name: </td> <td>{{ first_name }} {{last_name}}</td>
+                </tr>
+                <tr>
+                    <td>Amsler Score </td>  <td style="align-content: center;">{{amsler_score}}</td>
+                </tr>
+                <tr>
+                    <td>Status </td><td>{{status}}</td>
+                </tr>
+                <tr>
+                    <td>Date Of Upload</td><td>{{date}}</td>
+                </tr>
+            </TABLE>
+            <h3>Doctor Actions</h3>
+            <form role="form" action="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <table>
                     {{ form }}
                 </table>
                 <button type="submit">Submit</button>
-        </form>
-
-    <div>
-
-
-
-<script type="text/javascript" language="javascript">
-var bw = 400;
-var bh = 400;
-var p = 10;
-var canvas = document.getElementById("canvas");
-var context = canvas.getContext("2d");
-
-function drawBoard(){
-
-	for (var x = 0; x <= bw; x += 40) {
-    		context.moveTo(0.5 + x + p, p);
-    		context.lineTo(0.5 + x + p, bh + p);
-	}
+            </form>
+            <p>Click Button to alter transparency:</p>
+            <select  id="cars" onchange="myfunction()">
+                <option value="0.1">0.1</option>
+                <option value="0.25">0.25</option>
+                <option value="0.5" selected = "selected">0.5</option>
+                <option value="0.75">0.75</option>
+            </select>
+            <button onclick="myFunction()">Try it</button>
+        </div>
+	</div>
 
 
-	for (var x = 0; x <= bh; x += 40) {
-    		context.moveTo(p, 0.5 + x + p);
-    		context.lineTo(bw + p, 0.5 + x + p);
-	}
 
-	context.strokeStyle = "black";
-	context.stroke();
+
+<script>
+function myFunction() {
+    var e = document.getElementById("cars");
+    var strUser = e.options[e.selectedIndex].value;
+    document.getElementById("canva").style.opacity = strUser;
 }
-
-drawBoard();
-
-context.beginPath();
-context.arc(210,210,5,0,2*Math.PI);
-context.fillStyle = 'black';
-context.fill();
-context.stroke();
-
 </script>
 
 </body>

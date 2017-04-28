@@ -5,6 +5,9 @@ from userlist.forms import StatusChangeForm
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from django.contrib.auth.decorators import login_required
+
+
 
 
 # Create your views here.
@@ -45,14 +48,16 @@ def about(request):
 
 from django.shortcuts import get_object_or_404
 from datetime import datetime
+@login_required
 def amsler(request, pk, uid):
 	res = get_object_or_404(AmslerGrid, uid=uid)
 	if request.method == "POST":
-		form = StatusChangeForm(request.POST)
+		form = StatusChangeForm(request.POST, request.FILES)
 		if form.is_valid():
+			res.photo = form.cleaned_data['upload_photo']
 			res.status = form.cleaned_data['verify_status']
 			#res.save(commit=False)
-			res.verify_date = datetime.now()
+			#res.verify_date = datetime.now()
 			res.save()
 
 			return HttpResponseRedirect(reverse('patient'))
@@ -64,12 +69,13 @@ def amsler(request, pk, uid):
 	return render(
 		request,
 		'amsler.html',
-		{'amsler_score':res.amsler_score, 'first_name':res.patient.first_name, 'last_name':res.patient.last_name, 'photo':res.photo,'status': res.get_status_display,
-		'form': form } )
+		{'date':res.verify_date, 'amsler_score':res.amsler_score, 'first_name':res.patient.first_name, 'last_name':res.patient.last_name, 'photo':res.photo,'fundus':res.patient.fundus_photo, 'status': res.get_status_display,
+		'form': form, 'grid1':res.grid1 } )
    # return render( request, 'amsler.html', {'amsler_score':amsler_score}
    # )
 
 from django.core.urlresolvers import reverse
+@login_required
 def addpatient(request):
     if request.method == "POST":
         form = AddPatientForm(request.POST)
@@ -117,3 +123,4 @@ def api_root(request, format=None):
     return Response({
         'amsler_list': reverse('ams_api', request=request, format=format),
     })
+

@@ -6,13 +6,12 @@
 {% block content %}
 
   <div class="jumbotron text-center bg-1">
-    <h1 class="text-center">{{ patient.first_name }} {{patient.last_name}}</h1>
+    <h1 class="text-center"> {{ patient.first_name }} {{patient.last_name}}</h1>
   </div>
   <div style="margin-left:20px">
-    <p><strong>LastName:</strong>{{ patient.last_name }}</p> <!-- author detail link not yet defined -->
-    <p><strong>FirstName:</strong> {{ patient.first_name }}</p>
     <p><strong>Address:</strong> {{ patient.address }}</p>
     <p><strong>Age:</strong> {{ patient.age }}</p>
+    <p><strong>Email:</strong> {{ patient.email }}</p>
   </div>
   <div style="margin-left:20px;margin-top:20px">
     <h4>Amsler Grid Results</h4>
@@ -21,7 +20,7 @@
     <hr>
     <p class="{% if res.status == 'v' %}text-success{% elif res.status == 'u' %}text-danger{% else %}text-warning{% endif %}">{{ res.get_status_display }}</p>
     <p><strong>Amsler Grid Score:</strong> {{res.amsler_score}}</p>
-    <p class="text-muted"><strong>Id:</strong> {{res.uid}}</p>
+    <p class="text-muted"><strong>Date:</strong> {{res.verify_date}}</p>
     <p>
         <a href="{{res.get_absolute_url}}">Check</a>
     </p>
